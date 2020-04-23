@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Lay Order 躺著點</title>
+    <link rel="stylesheet" href="css/sweetalert2.min.css" />
+    <link rel="stylesheet" href="css/all.css" />
+  </head>
+  <body>
+    <div class="page nav_round" id="app">
+      <div class="main">
+        <header class="hide_lg">
+          <a href="index.html" class="icon iconfont icon-left"></a>
+          <h1>點菜單</h1>
+        </header>
+        <div class="content">
+          <!-- 點餐列表 -->
+          <div class="cart_list">
+            <ul>
+              <li
+                class="item"
+                v-for="(item,key,index) in orderList"
+                :key="index"
+              >
+                <div
+                  class="p_img"
+                  :style="{ 'background-image': 'url(' + item.pImg + ')' }"
+                ></div>
+                <div class="p_info">
+                  <div class="p_name">
+                    <h3>{{ item.pName }}</h3>
+                  </div>
+                  <div class="p_choose">
+                    <span
+                      v-for="(inneritem,index) in item.pOptions"
+                      :key="index"
+                      >{{ inneritem }}</span
+                    >
+                  </div>
+                  <div class="p_num">
+                    <div class="btn btn_round btn_white count_box">
+                      <a
+                        href="#"
+                        class="count_dis"
+                        @click.prevent="minusQty(item,index)"
+                        >-</a
+                      >
+                      <a href="#" class="count_num">{{ item.pQty }}</a>
+                      <a href="#" class="count_add" @click.prevent="item.pQty++"
+                        >+</a
+                      >
+                    </div>
+                    <div class="p_price">${{ item.pPrice * item.pQty }}</div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <!-- 點餐資訊 -->
+          <div class="order_list">
+            <ul>
+              <li class="item total">
+                <h4>
+                  共
+                  <b class="color_default">{{ orderQty }}</b> 份
+                </h4>
+                <span>${{ orderTotal }}</span>
+              </li>
+              <li class="item">
+                <h4>電話</h4>
+                <h5>09123123123</h5>
+              </li>
+              <li class="item">
+                <h4>取餐人</h4>
+                <h5>江宜蓁（自動帶入Line名稱）</h5>
+              </li>
+              <li class="item">
+                <h4>取餐時間</h4>
+                <input type="text" placeholder="請輸入" />
+              </li>
+              <li class="item">
+                <h4></h4>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="time"
+                    id="inlineRadio1"
+                    value
+                  />
+                  <label for="inlineRadio1">不指定</label>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <small class="color_red text-center d-block mt-2 mb-3"
+            >餐點現做，製作時間約 25 min</small
+          >
+          <footer class="d-block text-center fixed_bottom">
+            <a @click="checkOrder()" class="btn btn_default d-block btn_lg"
+              >確認點餐</a
+            >
+          </footer>
+        </div>
+      </div>
+    </div>
+  </body>
+
+  <script src="js/jquery-3.4.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.10.12/dist/sweetalert2.all.min.js"></script>
+  <script src="js/vue.min.js"></script>
+  <script src="js/vue-awesome-swiper.js"></script>
+
+  <!-- vue data -->
+  <script>
+    var app = new Vue({
+      el: "#app",
+
+      data() {
+        return {
+          orderList: [
+            {
+              pId: "1",
+              pName: "清蒸蒜香帝王蝦",
+              pImg:
+                "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
+              pPrice: "200",
+              pOptions: ["辣度：大辣", "洋蔥：加"],
+              pQty: 1
+            },
+            {
+              pId: "2",
+              pName: "招牌綜合海鮮",
+              pImg:
+                "https://images.unsplash.com/photo-1563372522-8e97eac82f62?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
+              pPrice: "300",
+              pOptions: ["辣度：小辣"],
+              pQty: 2
+            }
+          ]
+        };
+      },
+      methods: {
+        // 數量加減
+        minusQty(item, index) {
+          if (item.pQty > 1) {
+            return item.pQty--;
+          } else {
+            Swal.fire({
+              title: "你要移除這個產品嗎?",
+              text: "從購物車刪除此項產品",
+              type: "warning",
+              showCancelButton: true,
+              confirmButtonText: "確認",
+              cancelButtonText: "取消"
+            });
+          }
+        },
+        checkOrder() {
+          // 成功的話頁面跳轉到 result_out.html
+          window.location.href = 'result_out.html';
+        }
+      },
+      computed: {
+        orderQty() {
+          let str = 0;
+          this.orderList.forEach((item, i) => {
+            str += item.pQty;
+          });
+          return str;
+        },
+        orderTotal() {
+          let str = 0;
+          this.orderList.forEach((item, i) => {
+            str += item.pQty * item.pPrice;
+          });
+          return str;
+        }
+      }
+    });
+  </script>
+</html>

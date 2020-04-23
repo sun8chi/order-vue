@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Lay Order 躺著點</title>
+    <link rel="stylesheet" href="css/swiper.min.css" />
+    <link rel="stylesheet" href="css/sweetalert2.min.css" />
+    <link rel="stylesheet" href="css/all.css" />
+  </head>
+  <body>
+    <div class="page nav_round" id="app">
+      <page-footer></page-footer>
+      <div class="main">
+        <header>
+          <img src="img/logo_nav.png" alt="" />
+          <!-- 如果沒有 LOGO -->
+          <!-- <h1>餐廳名稱</h1> -->
+        </header>
+      </div>
+    </div>
+  </body>
+
+  <script src="js/jquery-3.4.1.min.js"></script>
+  <script src="js/swiper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.10.12/dist/sweetalert2.all.min.js"></script>
+  <script src="js/vue.min.js"></script>
+  <script src="js/vue-awesome-swiper.js"></script>
+  <script src="js/footer.js"></script>
+
+  <script type="text/javascript">
+    Vue.use(window.VueAwesomeSwiper);
+  </script>
+  <!-- vue data -->
+  <script>
+    var app = new Vue({
+      el: "#app",
+      data: {},
+      methods: {
+        // 加入購物車
+        alertAddcart() {
+          // 如果成功的話
+          this.popupShow = false;
+          Swal.fire({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            icon: "success",
+            title: "成功加入點菜單"
+          });
+          // 如果失敗的話
+          Swal.fire({
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            icon: "error",
+            title: "加入失敗，請重新操作！"
+          });
+        }
+      }
+    });
+  </script>
+</html>

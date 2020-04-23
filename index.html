@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Lay Order 躺著點</title>
+    <link rel="stylesheet" href="css/swiper.min.css" />
+    <link rel="stylesheet" href="css/sweetalert2.min.css" />
+    <link rel="stylesheet" href="css/all.css" />
+  </head>
+  <body>
+    <div class="page nav_round" id="app">
+      <page-footer v-if="!popupShow"></page-footer>
+      <div class="main">
+        <header>
+          <img src="img/logo_nav.png" alt="" />
+          <!-- 如果沒有 LOGO -->
+          <!-- <h1>餐廳名稱</h1> -->
+        </header>
+        <div class="content">
+          <!-- 產品分類 -->
+          <swiper
+            class="swiper_nav"
+            :options="swiperCategory"
+            ref="mySwiper"
+            @someSwiperEvent="swiper()"
+          >
+            <swiper-slide v-for="(item,key,index) in categorys" :key="index">
+              <a :id="item.cateId" @click.prevent="changeProductList()">{{
+                item.cateName
+              }}</a>
+            </swiper-slide>
+          </swiper>
+          <!-- 產品列表 -->
+          <div class="product_list">
+            <div
+              class="col-lg-3 col-md-4 col-6 p-0"
+              :id="item.pId"
+              v-for="(item,key,index) in productsList"
+              :key="index"
+            >
+              <div class="item open_popup">
+                <div
+                  class="p_image"
+                  @click="popupShow=!popupShow"
+                  :style="{ 'background-image': 'url(' + item.pImg + ')' }"
+                ></div>
+                <div class="p_info">
+                  <h3>{{ item.pName }}</h3>
+                  <p class="font_price">NT${{ item.pPrice }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 產品詳情 -->
+          <div class="popup" :class="{'show': popupShow }">
+            <a
+              href="#"
+              class="icon_close iconfont icon-weibiao45133 popup_close"
+              @click="popupShow = !popupShow"
+            ></a>
+            <div class="popup_content col-12 col-lg-6 col-md-8">
+              <!-- 產品輪播 -->
+              <div class="p_slider">
+                <swiper
+                  :options="swiperProductDetail"
+                  id="swiperProductDetail"
+                  class="swiper_product"
+                  ref="mySwiper"
+                  @someSwiperEvent="swiper()"
+                >
+                  <swiper-slide
+                    v-for="(item,key,index) in productDetail.pImgArr"
+                    :key="index"
+                  >
+                    <div
+                      class="p_img_slier"
+                      :style="{ 'background-image': 'url(' + item + ')' }"
+                    ></div>
+                  </swiper-slide>
+                  <div class="swiper-pagination" slot="pagination"></div>
+                </swiper>
+              </div>
+              <div class="p_content">
+                <div class="p_info p-3">
+                  <h3>{{ this.productDetail.pName }}</h3>
+                  <hr />
+                  <div class="p_text">
+                    <p>{{ this.productDetail.pDescription }}</p>
+                  </div>
+                  <div class="p_choose">
+                    <div
+                      class="item"
+                      v-for="(item,key,index) in productDetail.pOptions"
+                      :key="index"
+                    >
+                      <h5>{{ item.sideName }}</h5>
+                      <div
+                        class="form-check"
+                        v-for="(sideItem,key,itemIndex) in item.sideItems"
+                        :key="itemIndex"
+                      >
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          :name="item.sideName"
+                          :value="sideItem"
+                          :id="sideItem"
+                        />
+                        <label :for="sideItem">{{ sideItem }}</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="popup_footer">
+                  <div class="btn btn_round btn_white count_box">
+                    <a href="#" class="count_dis" @click.prevent="minusQty()"
+                      >-</a
+                    >
+                    <a href="#" class="count_num">{{
+                      this.productDetail.pQty
+                    }}</a>
+                    <a href="#" class="count_add" @click.prevent="addQty()"
+                      >+</a
+                    >
+                  </div>
+                  <a
+                    href="#"
+                    class="btn btn_round btn_default"
+                    @click.prevent="alertAddcart"
+                  >
+                    <span>${{ this.productDetail.pPrice }}</span
+                    >｜加入點菜單
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+
+  <script src="js/jquery-3.4.1.min.js"></script>
+  <script src="js/swiper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.10.12/dist/sweetalert2.all.min.js"></script>
+  <script src="js/vue.min.js"></script>
+  <script src="js/vue-awesome-swiper.js"></script>
+  <script src="js/footer.js"></script>
+
+  <script type="text/javascript">
+    Vue.use(window.VueAwesomeSwiper);
+  </script>
+  <!-- vue data -->
+  <script>
+    var app = new Vue({
+      el: "#app",
+      data: {
+        //產品列表
+        productsList: [
+          {
+            pId: "pId01",
+            pName: "清蒸蒜香帝王蝦",
+            pPrice: "800",
+            pImg:
+              "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60"
+          },
+          {
+            pId: "pId02",
+            pName: "招牌綜合海鮮",
+            pPrice: "900",
+            pImg:
+              "https://images.unsplash.com/photo-1539586345401-51d5bfba7ac0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60"
+          },
+          {
+            pId: "pId02",
+            pName: "招牌綜合海鮮",
+            pPrice: "900",
+            pImg:
+              "https://images.unsplash.com/photo-1539586345401-51d5bfba7ac0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60"
+          }
+        ],
+        //分類選單
+        categorys: [
+          {
+            cateId: "cate01",
+            cateName: "披薩"
+          },
+          {
+            cateId: "cate02",
+            cateName: "飲料"
+          },
+          {
+            cateId: "cate03",
+            cateName: "麵類"
+          },
+          {
+            cateId: "cate04",
+            cateName: "酒類"
+          },
+          {
+            cateId: "cate05",
+            cateName: "燉飯"
+          }
+        ],
+        //產品細節
+        productDetail: {
+          pId: "1",
+          pName: "清蒸蒜香帝王蝦",
+          pImgArr: [
+            "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
+            "https://images.unsplash.com/photo-1541058718861-4eea8bb410c0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
+            "https://images.unsplash.com/photo-1563372522-8e97eac82f62?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60"
+          ],
+          pDescription:
+            "這是一道很好吃的海鮮料理，僅用簡單的調味帶出食材最純粹的美好。",
+          pPrice: "800",
+          pOptions: [
+            {
+              sideName: "辣度",
+              sideItems: ["大辣", "中辣", "小辣", "不辣"]
+            },
+            {
+              sideName: "洋蔥",
+              sideItems: ["加", "不加"]
+            }
+          ],
+          pQty: 1
+        },
+        // 產品彈跳視窗
+        popupShow: false,
+        // swiper 參數
+        swiperCategory: {
+          paginationClickable: true,
+          slidesPerView: 4,
+          slideToClickedSlide: true,
+          centeredSlides: true
+        },
+        swiperProductDetail: {
+          loop: true,
+          pagination: {
+            el: ".swiper-pagination"
+          }
+        }
+      },
+      methods: {
+        // 切換分類
+        changeProductList() {
+          let vm = this;
+          // 更改 vm.productsList
+        },
+        // 數量加減
+        addQty() {
+          let vm = this;
+          vm.productDetail.pQty++;
+        },
+        minusQty() {
+          let vm = this;
+          if (vm.productDetail.pQty > 1) {
+            vm.productDetail.pQty--;
+          }
+        },
+        // 加入購物車
+        alertAddcart() {
+          // 如果成功的話
+          this.popupShow = false;
+          Swal.fire({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            icon: "success",
+            title: "成功加入點菜單"
+          });
+          // 如果失敗的話
+          Swal.fire({
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            icon: "error",
+            title: "加入失敗，請重新操作！"
+          });
+        }
+      }
+    });
+  </script>
+</html>

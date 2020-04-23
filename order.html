@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Lay Order 躺著點</title>
+    <link rel="stylesheet" href="css/swiper.min.css" />
+    <link rel="stylesheet" href="css/sweetalert2.min.css" />
+    <link rel="stylesheet" href="css/all.css" />
+  </head>
+  <body>
+    <div class="page nav_round" id="app">
+      <page-footer></page-footer>
+      <div class="main">
+        <header class="hide_lg">
+          <a href="index.html" class="icon iconfont icon-left"></a>
+          <h1>訂單狀態</h1>
+        </header>
+        <div class="cart_list status_list">
+          <ul>
+            <a href="order_info.html" v-for="(item,key,index) in orderList" :key="index">
+              <li class="item">
+                <div class="p_status bg_default">
+                  <h4>{{item.status}}</h4>
+                </div>
+                <div class="p_info">
+                  <div class="p_date">
+                    <h3>{{item.date}} {{item.time}} 取餐</h3>
+                  </div>
+                  <div class="p_price">${{item.totalPrice}}</div>
+                </div>
+                <div class="icon_right iconfont icon-right"></div>
+              </li>
+            </a>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </body>
+
+  <script src="js/jquery-3.4.1.min.js"></script>
+  <script src="js/swiper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.10.12/dist/sweetalert2.all.min.js"></script>
+  <script src="js/vue.min.js"></script>
+  <script src="js/vue-awesome-swiper.js"></script>
+  <script src="js/footer.js"></script>
+
+  <script type="text/javascript">
+    Vue.use(window.VueAwesomeSwiper);
+  </script>
+  <!-- vue data -->
+  <script>
+    var app = new Vue({
+      el: "#app",
+      data: {
+        orderList:[
+          {
+            status:'製作中',
+            date:'2020/04/20',
+            time:'12:00',
+            totalPrice:350
+          },
+          {
+            status:'待取餐',
+            date:'2020/03/20',
+            time:'17:00',
+            totalPrice:1350
+          },
+          {
+            status:'已完成',
+            date:'2020/02/20',
+            time:'16:00',
+            totalPrice:80
+          },
+        ]
+      },
+      methods: {
+        // 加入購物車
+        alertAddcart() {
+          // 如果成功的話
+          this.popupShow = false;
+          Swal.fire({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            icon: "success",
+            title: "成功加入點菜單"
+          });
+          // 如果失敗的話
+          Swal.fire({
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            icon: "error",
+            title: "加入失敗，請重新操作！"
+          });
+        }
+      }
+    });
+  </script>
+</html>

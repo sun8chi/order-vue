@@ -1,0 +1,228 @@
+@import "variables";
+// popup
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  backdrop-filter: blur(5px);
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 999;
+  overflow-y: scroll;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  align-items: center;
+  overflow-x: hidden;
+  padding-bottom: 30px;
+  min-height: 100vh;
+  @include animation;
+  opacity: 0;
+  visibility: hidden;
+  &.show {
+    visibility: visible;
+    opacity: 1;
+    .popup_content {
+      transform: scale(1);
+    }
+  }
+}
+
+.popup_content {
+  transform: scale(0);
+  @include animation;
+}
+.icon_close {
+  @include icon_btn;
+  margin: 1rem auto;
+}
+
+.p_slider {
+  height: 250px;
+  background-image: url(../img/load.png);
+  background-size: cover;
+  background-position: center;
+  .p_img_slier {
+    width: 100%;
+    height: 250px;
+    background-position: center;
+    background-size: cover;
+  }
+  @include desktop_sm {
+    height: 400px;
+    .p_img_slier {
+      height: 400px;
+    }
+  }
+}
+
+.popup_info {
+  @include shadow;
+  border-radius: 8px;
+  background: #fff;
+  padding: 30px;
+  text-align: center;
+
+  h2 {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: $color_default;
+  }
+
+  img {
+    width: 50%;
+  }
+}
+
+.p_info {
+  background: #fff;
+
+  h3 {
+    font-weight: bold;
+    margin: 0.25rem 0;
+  }
+
+  hr {
+    margin: 0.75rem 0;
+  }
+
+  .p_text {
+    font-size: 0.9rem;
+  }
+}
+
+.popup_footer {
+  background: #fcfcfc;
+  padding: 0.75rem;
+  text-align: center;
+  display: flex;
+  border-radius: 0 0 8px 8px;
+
+  .btn {
+    width: 100%;
+    margin: 0 0.25rem;
+    padding-left: 0;
+    padding-right: 0;
+    font-weight: bold;
+  }
+}
+
+.p_choose {
+  .item {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    margin-bottom: 0.5rem;
+  }
+
+  h5 {
+    margin: 0;
+    margin-right: 0.75rem;
+    color: #444;
+  }
+
+  label {
+    vertical-align: middle;
+    font-size: 0.9rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    input {
+      opacity: 0;
+      visibility: hidden;
+      position: absolute;
+    }
+  }
+
+  .form-check {
+    display: flex;
+    margin-right: 0.5rem;
+  }
+  .radiobtn {
+    position: relative;
+    display: inline-block;
+    top: 0;
+    left: 0;
+    height: 17px;
+    width: 17px;
+    background-color: #eee;
+    border-radius: 50%;
+    margin-right: 3px;
+    cursor: pointer;
+  }
+
+  input:checked ~ .radiobtn {
+    background-color: $color_default;
+  }
+
+  .radiobtn:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+
+  input:checked ~ .radiobtn:after {
+    display: block;
+  }
+
+  .radiobtn:after {
+    top: 25%;
+    left: 25%;
+    width: 50%;
+    height: 50%;
+    border-radius: 50%;
+    background: white;
+  }
+}
+
+@include desktop_md {
+  font-size: 18px;
+  .p_choose label {
+    font-size: 1.1rem;
+  }
+}
+
+// modal
+
+.modal {
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
+  display: block;
+  opacity: 1;
+  visibility: visible;
+  transition: 0.3s ease;
+  &.modal_hidden {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Lay Order 躺著點</title>
+    <link rel="stylesheet" href="css/swiper.min.css" />
+    <link rel="stylesheet" href="css/sweetalert2.min.css" />
+    <link rel="stylesheet" href="css/all.css" />
+  </head>
+  <body>
+    <div class="page nav_round" id="app">
+      <div class="main">
+        <header>
+          <h1>點餐成功</h1>
+        </header>
+        <div class="content">
+          <div class="result out">
+            <img src="img/result_ok.png" alt="" />
+            <div class="number">
+              {{orderDetail.orderNum}}
+            </div>
+            <p class="text-center mb-4">
+              謝謝您的訂餐！<br />
+              請於您指定的時間憑<span class="color_default">取餐編號</span
+              >來店取餐<br />
+              若需調整訂單請撥打電話與我們聯繫！
+            </p>
+          </div>
+          <div class="order_list mb-4">
+            <ul>
+              <li class="item total">
+                <h4>共 <b class="color_default">{{orderDetail.num}}</b> 份</h4>
+                <span>${{orderDetail.totalPrice}}</span>
+              </li>
+              <li class="item">
+                <h4>電話</h4>
+                <span>{{orderDetail.phone}}</span>
+              </li>
+              <li class="item">
+                <h4>取餐人</h4>
+                <span>{{orderDetail.name}}</span>
+              </li>
+              <li class="item">
+                <h4>取餐時間</h4>
+                <span>{{orderDetail.pickTime}}</span>
+              </li>
+            </ul>
+          </div>
+          <div class="d-flex text-center">
+            <div class="col-6">
+              <a href="#" class="btn btn_lg btn_yellow d-block">撥打電話</a>
+            </div>
+            <div class="col-6">
+              <a href="order.html" class="btn btn_lg btn_default d-block"
+                >訂單狀態</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+
+  <script src="js/jquery-3.4.1.min.js"></script>
+  <script src="js/swiper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.10.12/dist/sweetalert2.all.min.js"></script>
+  <script src="js/vue.min.js"></script>
+  <script src="js/footer.js"></script>
+
+  <!-- vue data -->
+  <script>
+    var app = new Vue({
+      el: "#app",
+      data: {
+        orderDetail:{
+          orderNum:'003',
+          num:'3',
+          totalPrice:'600',
+          phone:'0980264521',
+          name:'張小明',
+          pickTime:'2020/4/12 12:00'
+        }
+      },
+      methods: {
+        // 加入購物車
+        alertAddcart() {
+          // 如果成功的話
+          this.popupShow = false;
+          Swal.fire({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            icon: "success",
+            title: "成功加入點菜單"
+          });
+          // 如果失敗的話
+          Swal.fire({
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            icon: "error",
+            title: "加入失敗，請重新操作！"
+          });
+        }
+      }
+    });
+  </script>
+</html>
