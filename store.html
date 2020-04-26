@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>快點快點</title>
+    <link rel="stylesheet" href="css/all.css" />
+  </head>
+  <body>
+    <div class="page nav_round" id="app">
+      <page-footer></page-footer>
+      <div class="main">
+        <header>
+          <a href="member_info.html" class="icon iconfont icon-left"></a>
+          <h1>店家介紹</h1>
+        </header>
+        <div class="content">
+          <div class="store_info">
+            <img :src="storeInfo.img" alt="" />
+            <h2>{{ this.storeInfo.name }}</h2>
+            <p>
+              {{ this.storeInfo.intro }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+
+  <script src="js/jquery-3.4.1.min.js"></script>
+  <script src="js/vue.min.js"></script>
+  <script src="js/footer.js"></script>
+
+  <script>
+    let myStore = {
+      storeInfo: {
+        img:
+          "https://images.unsplash.com/photo-1549488344-1f9b8d2bd1f3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
+        name: "這是店家名稱",
+        intro:
+          "這是一間好吃的義法餐館，就是做一些很好吃的東西，介紹介紹介紹介紹介紹介紹介紹介紹介紹介紹介紹介紹介紹"
+      }
+    };
+  </script>
+  <!-- vue data -->
+  <script>
+    var app = new Vue({
+      el: "#app",
+      data: myStore,
+      methods: {}
+    });
+  </script>
+</html>

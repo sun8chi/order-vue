@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>快點快點</title>
+    <link rel="stylesheet" href="css/all.css" />
+  </head>
+  <body>
+    <div class="page nav_round" id="app">
+      <page-footer></page-footer>
+      <div class="main">
+        <header>
+          <a href="member_info.html" class="icon iconfont icon-left"></a>
+          <h1>我的好友 <small class="label">{{this.friendList.length}}</small></h1>
+        </header>
+        <div class="content">
+          <div class="cart_list status_list img_list">
+            <ul>
+              <li
+                class="item"
+                v-for="(item,key,index) in friendList"
+                :key="index"
+              >
+                <div class="p_status" :style="{ 'background-image': 'url(' + item.userImg + ')' }"></div>
+                <div class="p_info">
+                  <div class="p_date">
+                    <h3>{{item.name}}</h3>
+                  </div>
+                  <div class="p_price color_red">
+                    愛心存摺 <i class="iconfont icon-Heart"></i> {{item.points}}
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+
+  <script src="js/jquery-3.4.1.min.js"></script>
+  <script src="js/vue.min.js"></script>
+  <script src="js/footer.js"></script>
+
+  <script>
+    let myFriend = {
+      friendList: [
+        {
+          userImg:
+            "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
+          name: "吳曉萱",
+          points: "520"
+        },
+        {
+          userImg:
+            "https://images.unsplash.com/photo-1492633423870-43d1cd2775eb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
+          name: "黃大華",
+          points: "10"
+        },
+        {
+          userImg:
+            "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
+          name: "蔡小利",
+          points: "80"
+        },
+        {
+          userImg:
+            "https://images.unsplash.com/photo-1514385220762-c34342c4f495?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
+          name: "陳瀅羽",
+          points: "120"
+        }
+      ]
+    };
+  </script>
+  <!-- vue data -->
+  <script>
+    var app = new Vue({
+      el: "#app",
+      data: myFriend ,
+      methods: {}
+    });
+  </script>
+</html>

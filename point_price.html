@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>快點快點</title>
+    <link rel="stylesheet" href="css/all.css" />
+  </head>
+  <body>
+    <div class="page nav_round" id="app">
+      <page-footer></page-footer>
+      <div class="main">
+        <header>
+          <a href="member_info.html" class="icon iconfont icon-left"></a>
+          <h1>點數存摺</h1>
+        </header>
+        <div class="content">
+          <div class="cart_list status_list img_list">
+            <ul>
+              <li class="item">
+                <div
+                  class="p_status"
+                  :style="{ 'background-image': 'url(' + myPoint.userImg + ')' }"
+                ></div>
+                <div class="p_info">
+                  <div class="p_date">
+                    <h3>{{ this.myPoint.name }}</h3>
+                  </div>
+                  <div class="p_price color_green">
+                    我的點數存摺 <i class="iconfont icon-coins"></i>
+                    {{ this.myPoint.points }}
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="cart_list status_list point_list">
+            <ul>
+              <li class="item" v-for="(item,key,index) in pointsList" ::key="key">
+                <div class="p_status bg_green">
+                  <i class="iconfont icon-coins"></i>
+                </div>
+                <div class="p_info">
+                  <div class="p_date">
+                    <h3>{{item.date}}</h3>
+                  </div>
+                  <div class="p_price color_green">
+                    {{item.point}}
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+
+  <script src="js/jquery-3.4.1.min.js"></script>
+  <script src="js/vue.min.js"></script>
+  <script src="js/footer.js"></script>
+
+  <script>
+    let myFriend = {
+      myPoint: {
+        userImg:
+          "https://images.unsplash.com/photo-1569932189430-a1ecad96d05d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
+        name: "江小珍",
+        points: "520"
+      },
+      pointsList:[
+        {
+          date:'2020/04/04',
+          point:'+30'
+        },
+        {
+          date:'2020/04/14',
+          point:'-20'
+        },
+        {
+          date:'2020/03/24',
+          point:'+10'
+        },
+        {
+          date:'2020/02/14',
+          point:'+5'
+        },
+        {
+          date:'2020/01/02',
+          point:'-3'
+        },
+      ]
+    };
+  </script>
+  <!-- vue data -->
+  <script>
+    var app = new Vue({
+      el: "#app",
+      data: myFriend,
+      methods: {}
+    });
+  </script>
+</html>
