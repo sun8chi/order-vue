@@ -29,6 +29,7 @@ $color_light: #9b9b9b;
 $color_red: #f77878;
 $color_yellow: #f7d078;
 $color_green: #8bbc72;
+$color_LINE: #00c300;
 $font_en: "'Overpass', sans-serif";
 $font_price: "'Ubuntu', sans-serif";
 
@@ -59,7 +60,7 @@ $font_price: "'Ubuntu', sans-serif";
   font-size: 1rem !important;
 }
 .fz_xs {
-  font-size: .7rem !important;
+  font-size: 0.7rem !important;
 }
 .overflow_hidden {
   overflow: hidden;
@@ -162,6 +163,9 @@ h4 {
 .color_red {
   color: $color_red !important;
 }
+.bg_red {
+  background: $color_red !important;
+}
 
 .bg_green {
   background: $color_green !important;
@@ -223,6 +227,9 @@ h4 {
 
 .color_green {
   color: $color_green !important;
+}
+.color_yellow {
+  color: $color_yellow !important;
 }
 
 .color_gray {
@@ -312,9 +319,9 @@ h4 {
     margin-bottom: 0.75rem;
 
     &:hover {
-      .iconfont {
-        color: $color_default;
-      }
+      // .iconfont {
+      //   color: $color_default;
+      // }
     }
   }
 
@@ -348,7 +355,7 @@ h4 {
         width: 40%;
         font-size: 1rem;
         font-weight: bold;
-        padding: 0 .5rem 0 .5rem;
+        padding: 0 0.5rem 0 0.5rem;
         a {
           padding-left: 0.25rem;
           padding-right: 0.25rem;

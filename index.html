@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Lay Order 躺著點</title>
+    <title>快點快點</title>
     <link rel="stylesheet" href="css/swiper.min.css" />
     <link rel="stylesheet" href="css/sweetalert2.min.css" />
     <link rel="stylesheet" href="css/all.css" />
@@ -13,6 +13,9 @@
     <div class="page nav_round" id="app">
       <page-footer v-if="!popupShow"></page-footer>
       <div class="main">
+        <div class="header_notice" v-if="!isOpen.open">
+          目前尚未開放點餐功能！開放時間為 {{ isOpen.openTime }}
+        </div>
         <header>
           <img src="img/logo_nav.png" alt="" />
           <!-- 如果沒有 LOGO -->
@@ -35,7 +38,7 @@
           <!-- 產品列表 -->
           <div class="product_list">
             <div
-              class="col-lg-3 col-md-4 col-6 p-0"
+              class="col-md-4 col-6 p-0"
               :id="item.pId"
               v-for="(item,key,index) in productsList"
               :key="index"
@@ -57,7 +60,7 @@
           <div class="popup" :class="{'show': popupShow }">
             <a
               href="#"
-              class="icon_close iconfont icon-weibiao45133 popup_close"
+              class="icon_close iconfont icon-close1 popup_close"
               @click="popupShow = !popupShow"
             ></a>
             <div class="popup_content col-12 col-lg-6 col-md-8">
@@ -81,11 +84,29 @@
                   </swiper-slide>
                   <div class="swiper-pagination" slot="pagination"></div>
                 </swiper>
+                <a
+                  :href="this.productDetail.shareLink"
+                  target="_blank"
+                  class="share"
+                  ><i class="iconfont icon-share"></i>分享給好友</a
+                >
               </div>
               <div class="p_content">
                 <div class="p_info p-3">
                   <h3>{{ this.productDetail.pName }}</h3>
                   <hr />
+                  <div class="p_price">
+                    <h4>${{ this.productDetail.pPrice }}</h4>
+                    <span class="point_cash"
+                      ><i class="iconfont icon-coins"></i
+                      ><b>{{ this.productDetail.pPointPrice }}</b> 點現金點數
+                    </span>
+                    <span class="point_heart"
+                      ><i class="iconfont icon-Heart"></i
+                      ><b>{{ this.productDetail.pPointHeart }}</b>
+                      點愛心點數</span
+                    >
+                  </div>
                   <div class="p_text">
                     <p>{{ this.productDetail.pDescription }}</p>
                   </div>
@@ -95,25 +116,28 @@
                       v-for="(item,key,index) in productDetail.pOptions"
                       :key="index"
                     >
-                      <h5>{{ item.sideName }}</h5>
+                      <h5>{{ item.sideName }} <span v-if="item.type=='checkbox'">（複）</span></h5>
                       <div
                         class="form-check"
                         v-for="(sideItem,key,itemIndex) in item.sideItems"
                         :key="itemIndex"
                       >
-                        <input
-                          class="form-check-input"
-                          type="radio"
-                          :name="item.sideName"
-                          :value="sideItem"
-                          :id="sideItem"
-                        />
-                        <label :for="sideItem">{{ sideItem }}</label>
+                        <label :for="sideItem">
+                          <input
+                            class="form-check-input"
+                            :type="item.type"
+                            :name="item.sideName"
+                            :value="sideItem"
+                            :id="sideItem"
+                          />
+                          <span class="input_style"></span>
+                          <span class="input_name">{{ sideItem }}</span>
+                        </label>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="popup_footer">
+                <div class="popup_footer" v-if="isOpen.open">
                   <div class="btn btn_round btn_white count_box">
                     <a href="#" class="count_dis" @click.prevent="minusQty()"
                       >-</a
@@ -130,7 +154,7 @@
                     class="btn btn_round btn_default"
                     @click.prevent="alertAddcart"
                   >
-                    <span>${{ this.productDetail.pPrice }}</span
+                    <span>${{ this.productDetail.pPrice*this.productDetail.pQty }}</span
                     >｜加入點菜單
                   </a>
                 </div>
@@ -151,99 +175,15 @@
 
   <script type="text/javascript">
     Vue.use(window.VueAwesomeSwiper);
+    Vue.config.devtools = true;
   </script>
+  <!-- json -->
+  <script src="js/json/home.js"></script>
   <!-- vue data -->
   <script>
     var app = new Vue({
       el: "#app",
-      data: {
-        //產品列表
-        productsList: [
-          {
-            pId: "pId01",
-            pName: "清蒸蒜香帝王蝦",
-            pPrice: "800",
-            pImg:
-              "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60"
-          },
-          {
-            pId: "pId02",
-            pName: "招牌綜合海鮮",
-            pPrice: "900",
-            pImg:
-              "https://images.unsplash.com/photo-1539586345401-51d5bfba7ac0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60"
-          },
-          {
-            pId: "pId02",
-            pName: "招牌綜合海鮮",
-            pPrice: "900",
-            pImg:
-              "https://images.unsplash.com/photo-1539586345401-51d5bfba7ac0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60"
-          }
-        ],
-        //分類選單
-        categorys: [
-          {
-            cateId: "cate01",
-            cateName: "披薩"
-          },
-          {
-            cateId: "cate02",
-            cateName: "飲料"
-          },
-          {
-            cateId: "cate03",
-            cateName: "麵類"
-          },
-          {
-            cateId: "cate04",
-            cateName: "酒類"
-          },
-          {
-            cateId: "cate05",
-            cateName: "燉飯"
-          }
-        ],
-        //產品細節
-        productDetail: {
-          pId: "1",
-          pName: "清蒸蒜香帝王蝦",
-          pImgArr: [
-            "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
-            "https://images.unsplash.com/photo-1541058718861-4eea8bb410c0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
-            "https://images.unsplash.com/photo-1563372522-8e97eac82f62?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60"
-          ],
-          pDescription:
-            "這是一道很好吃的海鮮料理，僅用簡單的調味帶出食材最純粹的美好。",
-          pPrice: "800",
-          pOptions: [
-            {
-              sideName: "辣度",
-              sideItems: ["大辣", "中辣", "小辣", "不辣"]
-            },
-            {
-              sideName: "洋蔥",
-              sideItems: ["加", "不加"]
-            }
-          ],
-          pQty: 1
-        },
-        // 產品彈跳視窗
-        popupShow: false,
-        // swiper 參數
-        swiperCategory: {
-          paginationClickable: true,
-          slidesPerView: 4,
-          slideToClickedSlide: true,
-          centeredSlides: true
-        },
-        swiperProductDetail: {
-          loop: true,
-          pagination: {
-            el: ".swiper-pagination"
-          }
-        }
-      },
+      data: homeData,
       methods: {
         // 切換分類
         changeProductList() {
@@ -274,15 +214,16 @@
             title: "成功加入點菜單"
           });
           // 如果失敗的話
-          Swal.fire({
-            position: "top-end",
-            showConfirmButton: false,
-            timer: 3000,
-            icon: "error",
-            title: "加入失敗，請重新操作！"
-          });
+          // Swal.fire({
+          //   position: "top-end",
+          //   showConfirmButton: false,
+          //   timer: 3000,
+          //   icon: "error",
+          //   title: "加入失敗，請重新操作！"
+          // });
         }
       }
     });
+    
   </script>
 </html>

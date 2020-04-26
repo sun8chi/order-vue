@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Lay Order 躺著點</title>
+    <title>快點快點</title>
     <link rel="stylesheet" href="css/sweetalert2.min.css" />
     <link rel="stylesheet" href="css/all.css" />
   </head>
@@ -24,83 +24,73 @@
               </ul>
             </div>
           </div> -->
-          <div class="row text-center">
-            <div class="ml-auto mr-auto mb-3">
-              <h2 class="mb-1">{{memberInfo.phone}}</h2>
-              <!-- <small class="color_red">若需修改電話號碼，請重新註冊</small> -->
-            </div>
-
-            <div class="col-sm-8 offset-sm-2">
-              <div class="form-group">
-                <label class="sr-only" for="phone">姓名</label>
-                <span class="iconfont icon-Mobile"></span>
-                <input
-                  class="form-control"
-                  type="text"
-                  id=""
-                  placeholder="電話"
-                  :value="memberInfo.phone"
-                  autocomplete="off"
-                />
-              </div>
-              <div class="form-group">
-                <label class="sr-only" for="phone">姓名</label>
-                <span class="iconfont icon-user"></span>
-                <input
-                  class="form-control"
-                  type="text"
-                  id=""
-                  placeholder="姓名"
-                  :value="memberInfo.name"
-                  autocomplete="off"
-                />
-              </div>
-              <div class="form-group">
-                <label class="sr-only" for="phone">居住地</label>
-                <span class="iconfont icon-location"></span>
-                <div class="d-flex">
-                  <select class="form-control mr-1" name="" id="">
-                    <option value="" hidden>城市</option>
-                    <option value="" selected>高雄市</option>
-                    <option value="">高雄市</option>
-                    <option value="">高雄市</option>
-                  </select>
-                  <select class="form-control" name="" id="">
-                    <option value="" hidden>區域</option>
-                    <option value="" selected>三民區</option>
-                  </select>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="sr-only" for="phone">生日</label>
-                <span class="iconfont icon-birthday-cake"></span>
-                <input
-                  class="form-control"
-                  type="date"
-                  id="inputDate"
-                  placeholder="生日"
-                  autocomplete="off"
-                  :value="memberInfo.birthday"
-                />
-              </div>
-              <div class="form-group mb-4">
-                <label class="sr-only" for="phone">密碼</label>
-                <span class="iconfont icon-lock"></span>
-                <input
-                  class="form-control"
-                  type="password"
-                  id=""
-                  :value="memberInfo.password"
-                  placeholder="密碼"
-                  autocomplete="off"
-                />
-              </div>
-              <a href="#" class="btn btn_default mb-2">修改</a>
-              <br />
-              <small>
-                <a href="login.html" class="color_gray">登出</a>
-              </small>
-            </div>
+          <div class="cart_list status_list icon_list">
+            <ul>
+              <a href="point_price.html">
+                <li class="item">
+                  <div class="p_status bg_green">
+                    <h4 class="iconfont icon-coins"></h4>
+                  </div>
+                  <div class="p_info">
+                    <div class="p_price color_green">點數存摺</div>
+                    <div class="p_date">
+                      <h3>現金點數餘額：50點</h3>
+                    </div>
+                  </div>
+                  <div
+                    class="icon_right iconfont icon-right-l color_green"
+                  ></div>
+                </li>
+              </a>
+              <a href="point_love.html">
+                <li class="item">
+                  <div class="p_status bg_red">
+                    <h4 class="iconfont icon-Heart"></h4>
+                  </div>
+                  <div class="p_info">
+                    <div class="p_price color_red">愛心存摺</div>
+                    <div class="p_date">
+                      <h3>愛心點數餘額：20點</h3>
+                    </div>
+                  </div>
+                  <div
+                    class="icon_right iconfont icon-right-l color_red"
+                  ></div>
+                </li>
+              </a>
+              <a href="friends.html">
+                <li class="item">
+                  <div class="p_status bg_yellow">
+                    <h4 class="iconfont icon-user-friends"></h4>
+                  </div>
+                  <div class="p_info">
+                    <div class="p_price color_yellow">我的好友</div>
+                    <div class="p_date">
+                      <h3>查看好友動態</h3>
+                    </div>
+                  </div>
+                  <div
+                    class="icon_right iconfont icon-right-l color_yellow"
+                  ></div>
+                </li>
+              </a>
+              <a href="store.html">
+                <li class="item">
+                  <div class="p_status bg_default">
+                    <h4 class="iconfont icon-store"></h4>
+                  </div>
+                  <div class="p_info">
+                    <div class="p_price">店家介紹</div>
+                    <div class="p_date">
+                      <h3>關於這一間餐館</h3>
+                    </div>
+                  </div>
+                  <div
+                    class="icon_right iconfont icon-right-l color_default"
+                  ></div>
+                </li>
+              </a>
+            </ul>
           </div>
         </div>
       </div>
@@ -113,16 +103,17 @@
   <script type="text/javascript" src="js/datepicker.min.js"></script>
   <script type="text/javascript" src="js/datepicker.zh.js"></script>
   <script>
-    $(document).ready(function() {
-      $(function() {
-        $("#inputDate").datepicker({
-          changeMonth: true,
-          changeYear: true,
-          maxDate: new Date(),
-          language: "zh"
-        });
-      });
-    });
+    // 日曆
+    // $(document).ready(function() {
+    //   $(function() {
+    //     $("#inputDate").datepicker({
+    //       changeMonth: true,
+    //       changeYear: true,
+    //       maxDate: new Date(),
+    //       language: "zh"
+    //     });
+    //   });
+    // });
   </script>
   <script src="js/vue.min.js"></script>
   <script src="js/vue-awesome-swiper.js"></script>
@@ -132,38 +123,10 @@
   <script>
     var app = new Vue({
       el: "#app",
-      data: {
-        memberInfo:{
-          phone:'0980123123',
-          name:'許光和',
-          addressCity:'高雄市',
-          addressArea:'鼓山區',
-          birthday:'82/02/02',
-          password:'4612396'
-        }
-      },
+      data: {},
       methods: {
         // 加入購物車
-        alertAddcart() {
-          // 如果成功的話
-          this.popupShow = false;
-          Swal.fire({
-            toast: true,
-            position: "top-end",
-            showConfirmButton: false,
-            timer: 3000,
-            icon: "success",
-            title: "成功加入點菜單"
-          });
-          // 如果失敗的話
-          Swal.fire({
-            position: "top-end",
-            showConfirmButton: false,
-            timer: 3000,
-            icon: "error",
-            title: "加入失敗，請重新操作！"
-          });
-        }
+        alertAddcart() {}
       }
     });
   </script>

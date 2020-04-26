@@ -12,18 +12,14 @@
 .grecaptcha-badge {
   display: none;
 }
+.swal2-icon.swal2-warning {
+  font-size: 1rem;
+}
 .page {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
   min-height: 100vh;
-  background-image: url(../img/full_img.png);
-  background-size: cover;
-  @include desktop-sm {
-    @include bg_paper;
-    flex-direction: column;
-    align-items: center;
-  }
+  background-image: url(../img/bg_papper.png);
   &.login {
     background-image: url(../img/full_img.png) !important;
     background-repeat: no-repeat;
@@ -43,25 +39,30 @@
         background-color: #fff;
       }
     }
-    @include desktop-sm {
-      padding: 50px 20px;
-      footer {
-        max-width: 400px;
-        background-size: 30% auto;
-      }
-      .content img {
-        display: none;
-      }
-    }
   }
 }
 .swiper-pagination-bullet-active {
   background: $color_default !important;
 }
+.header_notice {
+  text-align: center;
+  padding: 0.5rem 1.5rem;
+  background: $color_red;
+  font-weight: bold;
+  font-size: 1.1rem;
+  border-radius: 50px;
+  margin: 10px 15px 0 10px;
+  color: #fff;
+  position: relative;
+  z-index: 1;
+}
 header {
   text-align: center;
   padding: 1rem;
   position: relative;
+  @include desktop-sm {
+    background: #fff;
+  }
 
   .icon {
     @include icon_btn;
@@ -86,28 +87,14 @@ header {
     height: 30px;
     vertical-align: middle;
   }
-
-  @include desktop-sm {
-    margin: 1rem 1rem 3rem 1rem;
-    border-radius: 10px;
-    background: $color_default;
-    padding: 1.5rem;
-
-    h1 {
-      color: #fff;
-    }
-    img {
-      height: 40px;
-    }
-  }
 }
 
 .main {
   @include shadow;
-  max-width: 576px;
+  max-width: 100%;
   margin: 0 auto;
   border-radius: 5px;
-  width: 100%;
+  width: 575px;
   padding-bottom: 80px;
   background-color: #fff;
   &::before {
@@ -129,7 +116,7 @@ header {
     padding-top: 0;
     z-index: 1;
     @include desktop-sm {
-      padding: 15px;
+      background: #fff;
     }
   }
 
@@ -142,9 +129,6 @@ header {
     margin: 0.75rem 0.75rem 0 0.75rem;
     font-weight: bold;
     left: 1px;
-    @include desktop-sm {
-      margin: 0.75rem;
-    }
   }
 
   ul.nav_group {
@@ -176,20 +160,14 @@ header {
       }
     }
   }
-
-  @include desktop-sm {
-    max-width: 960px;
-    padding-bottom: 0;
-    margin-bottom: 0;
-    background: #fff;
-    border-radius: 0;
-
-    header img {
-      display: none;
-    }
+}
+// 店家介紹
+.store_info {
+  h2 {
+    font-size: 1.2rem;
+    color: $color_default;
   }
 }
-
 // 登入
 .login {
   padding: 50px 20px;
@@ -202,23 +180,6 @@ header {
       width: 50%;
       margin: 2rem;
     }
-  }
-
-  @include desktop-sm {
-    @include bg_full;
-
-    .content {
-      img {
-        width: 50%;
-      }
-    }
-  }
-}
-
-// 會員
-@include desktop-sm {
-  .member.main header {
-    display: none;
   }
 }
 
@@ -245,9 +206,6 @@ header {
     span {
       color: $color_red;
     }
-  }
-  @include desktop-sm {
-    min-height: 60vh;
   }
 }
 
@@ -302,6 +260,7 @@ header {
   display: flex;
   justify-content: flex-start;
   flex-wrap: wrap;
+  padding: 0 10px;
 
   .item {
     @include shadow;
@@ -318,12 +277,10 @@ header {
       height: 130px;
       background-position: center;
       background-size: cover;
-      @include desktop-sm {
-        height: 180px;
-      }
     }
     .p_info {
       padding: 0.75rem;
+      font-size: 1.1rem;
 
       h3 {
         color: #4a4a4a;
@@ -345,17 +302,36 @@ header {
     }
   }
 }
-
+.label {
+  font-family: $font_price;
+  color: #fff;
+  background: $color_default;
+  border-radius: 100%;
+  height: 1.1rem;
+  width: 1.1rem;
+  flex-shrink: 0;
+  display: inline-block;
+  text-align: center;
+  line-height: 1.1rem;
+  z-index: 9;
+  font-weight: bold;
+}
 // footer
 footer {
   position: fixed;
-  left: 0;
+  max-width: 575px;
+  left: 50%;
+  transform: translateX(-50%);
   bottom: 0;
   width: 100%;
-  background: #fcfcfc;
+  background: #fff;
   text-align: center;
   z-index: 2;
-
+  border: 1px solid #eee;
+  .iconfont {
+    transition: ease 0.3s;
+    font-size: 2rem;
+  }
   .nav_logo {
     display: none;
     img {
@@ -368,11 +344,6 @@ footer {
   &.fixed_bottom {
     @include shadow;
     padding: 1rem 0.7rem;
-
-    @include desktop-sm {
-      box-shadow: none;
-      background: transparent;
-    }
   }
 
   ul {
@@ -383,31 +354,15 @@ footer {
       width: 25%;
 
       .label {
-        font-family: $font_price;
         position: absolute;
         right: 23%;
         top: 8%;
-        color: #fff;
-        background: $color_default;
-        border-radius: 100%;
-        height: 1.1rem;
-        width: 1.1rem;
-        text-align: center;
-        line-height: 1.1rem;
-        z-index: 9;
-        font-weight: bold;
-        @include desktop-sm {
-          right: 28%;
-        }
-        @include desktop-md {
-          right: 30%;
-        }
       }
 
       a {
         @include animation;
         display: block;
-        padding: 1em;
+        padding: 0.25rem 1rem;
         color: #979999;
         font-size: 0.6rem;
 
@@ -423,10 +378,12 @@ footer {
       }
       &.active,
       &:hover {
-        a,
         p {
           color: $color_default;
           font-weight: bold;
+        }
+        .iconfont {
+          color: $color_default;
         }
 
         img {
@@ -458,33 +415,6 @@ footer {
       }
     }
   }
-
-  @include desktop-sm {
-    position: static;
-    max-width: 960px;
-    display: block;
-    background-color: #fff;
-
-    .nav_logo {
-      display: block;
-    }
-
-    ul {
-      margin: 0 auto;
-      // li a {
-      //     display: flex;
-      //     align-items: center;
-      //     justify-content: center;
-      //     img {
-      //         width: 1.3rem;
-      //     }
-      //     p {
-      //         font-size: 1rem;
-      //         padding-left: 0.2rem;
-      //     }
-      // }
-    }
-  }
 }
 
 .result {
@@ -507,10 +437,6 @@ footer {
     text-align: center;
     width: 100%;
 
-    @include desktop-sm {
-      top: 55%;
-    }
-
     &.out {
     }
 
@@ -525,14 +451,9 @@ footer {
       top: 0;
     }
   }
-  @include desktop-sm {
-    img {
-      width: 50%;
-      margin: 0 auto;
-    }
-  }
 }
 
+// 列表
 .status_list {
   .item {
     background: #fff;
@@ -553,13 +474,6 @@ footer {
       position: relative;
       color: #fff;
       font-weight: bold;
-    }
-
-    @include desktop-sm {
-      width: 45%;
-    }
-    @include desktop-md {
-      width: 30%;
     }
   }
 
@@ -586,15 +500,63 @@ footer {
     color: #bbb;
     margin-right: 0.5rem;
   }
-  @include desktop-sm {
-    ul {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
+}
+.icon_list {
+  h4.iconfont {
+    font-size: 3rem;
+    opacity: 0.7;
+    transition: 0.3s ease;
+  }
+  a:hover {
+    h4.iconfont {
+      opacity: 1;
     }
   }
 }
-
+.img_list {
+  .item {
+    padding: 0.5rem 1rem;
+  }
+  .p_info {
+    padding: 0.5rem 1.25rem 0.5rem 1.25rem;
+  }
+  .p_status {
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 100%;
+    background-color: $color_red;
+    flex-shrink: 0;
+    margin: auto 0;
+    background-image: url(../img/login_img.png);
+    background-size: cover;
+    background-position: center;
+  }
+}
+.point_list {
+  .item {
+    padding: 0.5rem 1rem;
+    margin-bottom: 0.25rem;
+  }
+  .p_info {
+    padding: 0rem 1.25rem 0rem 1.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .p_status {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 100%;
+    background-color: $color_red;
+    flex-shrink: 0;
+    margin: auto 0;
+    font-weight: bold;
+    color: #fff;
+    .iconfont {
+      font-size: 1.5rem;
+    }
+  }
+}
 .list_sm {
   .item {
     display: flex;
@@ -616,6 +578,7 @@ footer {
   background: #fff;
 
   .item {
+    position: relative;
     display: flex;
     justify-content: space-between;
     border-bottom: 1px solid #f1f1f1;
@@ -660,6 +623,16 @@ footer {
       font-size: 1.4rem;
       color: $color_red;
       font-weight: bold;
+    }
+    h4 {
+      display: flex;
+      > div {
+        margin: 0 0.35rem;
+        font-size: 0.8rem;
+        b {
+          font-size: 1.1rem;
+        }
+      }
     }
   }
 }

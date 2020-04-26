@@ -4,14 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Lay Order 躺著點</title>
+    <title>快點快點</title>
     <link rel="stylesheet" href="css/sweetalert2.min.css" />
     <link rel="stylesheet" href="css/all.css" />
   </head>
   <body>
     <div class="page nav_round" id="app">
       <div class="main">
-        <header class="hide_lg">
+        <header>
           <a href="index.html" class="icon iconfont icon-left"></a>
           <h1>點菜單</h1>
         </header>
@@ -52,6 +52,14 @@
                         >+</a
                       >
                     </div>
+                    <div class="color_green mr-2 ml-2">
+                      <i class="iconfont icon-coins"></i
+                      >{{ item.pointPrice * item.pQty }}
+                    </div>
+                    <div class="color_red">
+                      <i class="iconfont icon-Heart"></i
+                      >{{ item.pointHeart * item.pQty }}
+                    </div>
                     <div class="p_price">${{ item.pPrice * item.pQty }}</div>
                   </div>
                 </div>
@@ -63,41 +71,158 @@
             <ul>
               <li class="item total">
                 <h4>
-                  共
-                  <b class="color_default">{{ orderQty }}</b> 份
+                  <div>
+                    共 <b class="color_default">{{ orderQty }}</b> 份
+                  </div>
+                  <div>
+                    現金點數共
+                    <b class="color_green"
+                      ><i class="iconfont icon-coins"></i>
+                      {{ orderPointPrice }}</b
+                    >
+                    點
+                  </div>
+                  <div>
+                    愛心點數共
+                    <b class="color_red"
+                      ><i class="iconfont icon-Heart"></i>
+                      {{ orderPointHeart }}</b
+                    >
+                    點
+                  </div>
                 </h4>
                 <span>${{ orderTotal }}</span>
               </li>
+
               <li class="item">
-                <h4>電話</h4>
-                <h5>09123123123</h5>
+                <h4>
+                  現金點數折抵
+                  <small class="color_green">
+                    <i class="iconfont icon-coins"></i>可用餘額 <b>15</b> 點
+                  </small>
+                </h4>
+                <input type="number" max="2" placeholder="請輸入折抵數量" />
               </li>
               <li class="item">
-                <h4>取餐人</h4>
-                <h5>江宜蓁（自動帶入Line名稱）</h5>
-              </li>
-              <li class="item">
-                <h4>取餐時間</h4>
-                <input type="text" placeholder="請輸入" />
-              </li>
-              <li class="item">
-                <h4></h4>
-                <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    name="time"
-                    id="inlineRadio1"
-                    value
-                  />
-                  <label for="inlineRadio1">不指定</label>
+                <h4>用餐方式</h4>
+                <div class="select">
+                  <select name="" id="" v-model="eatType">
+                    <option checked value="eatInStore">內用</option>
+                    <option value="eatTogo">外帶</option>
+                    <option value="eatDelever">外送</option>
+                  </select>
                 </div>
               </li>
+              <!-- 內用 -->
+              <li class="item" v-if="this.eatType == 'eatInStore'">
+                <h4>內用桌號</h4>
+                <div class="select">
+                  <select name="" id="">
+                    <option value="">A桌</option>
+                    <option value="">B桌</option>
+                    <option value="">C桌</option>
+                  </select>
+                </div>
+              </li>
+              <!-- 外帶 -->
+              <div v-if="this.eatType == 'eatTogo'">
+                <li class="item">
+                  <h4>取餐人</h4>
+                  <input type="text" placeholder="請輸入" />
+                </li>
+                <li class="item">
+                  <h4>電話</h4>
+                  <input type="text" placeholder="請輸入" />
+                </li>
+                <li class="item">
+                  <h4>取餐時間</h4>
+                  <div class="select">
+                    <select name="" id="">
+                      <option value="">10:00</option>
+                      <option value="">10:00</option>
+                      <option value="">10:00</option>
+                      <option value="">10:00</option>
+                    </select>
+                  </div>
+                </li>
+              </div>
+              <!-- 外送 -->
+              <div v-if="this.eatType == 'eatDelever'">
+                <li class="item">
+                  <h4>取餐人</h4>
+                  <input type="text" placeholder="請輸入" />
+                </li>
+                <li class="item">
+                  <h4>電話</h4>
+                  <input type="text" placeholder="請輸入" />
+                </li>
+                <li class="item">
+                  <h4>外送時間</h4>
+                  <div class="select">
+                    <select name="" id="">
+                      <option value="">10:00</option>
+                      <option value="">10:00</option>
+                      <option value="">10:00</option>
+                      <option value="">10:00</option>
+                    </select>
+                  </div>
+                </li>
+                <li class="item">
+                  <h4>外送地址</h4>
+                  <input type="text" placeholder="請輸入" />
+                </li>
+              </div>
             </ul>
           </div>
           <small class="color_red text-center d-block mt-2 mb-3"
-            >餐點現做，製作時間約 25 min</small
+            >餐點現做，製作時間約 30 min</small
           >
+          <!-- 手機驗證 -->
+          <div class="popup" :class="{'show': popupShow }">
+            <a
+              href="#"
+              class="icon_close iconfont icon-close1 popup_close"
+              @click="popupShow = !popupShow"
+            ></a>
+            <div class="popup_content col-12 col-lg-6 col-md-8">
+              <div class="popup_box text-center">
+                <form>
+                  <div class="text-center">
+                    <img src="img/phone.png" width="60%" alt="" />
+                    <h2 class="color_default">電話號碼尚未驗證！</h2>
+                    <p class="mb-2">點餐需驗證手機，請輸入正確的手機號碼</p>
+                  </div>
+
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control mb-2"
+                      disabled
+                      placeholder="電話號碼"
+                    />
+                    <span class="iconfont icon-phone"></span>
+                    <div class="input-group-append">
+                      <a href="#" class="btn" id>送出驗證碼</a>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="sr-only" for="userName">驗證碼</label>
+                    <span class="iconfont icon-sms"></span>
+
+                    <input
+                      class="form-control"
+                      type="userName"
+                      placeholder="請輸入手機驗證碼"
+                      autocomplete="off"
+                    />
+                  </div>
+                  <button type="submit" class="btn btn_default mb-2">
+                    驗證
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
           <footer class="d-block text-center fixed_bottom">
             <a @click="checkOrder()" class="btn btn_default d-block btn_lg"
               >確認點餐</a
@@ -113,35 +238,14 @@
   <script src="js/vue.min.js"></script>
   <script src="js/vue-awesome-swiper.js"></script>
 
+  <!-- json -->
+  <script src="js/json/cart.js"></script>
   <!-- vue data -->
   <script>
+    Vue.config.devtools = true;
     var app = new Vue({
       el: "#app",
-
-      data() {
-        return {
-          orderList: [
-            {
-              pId: "1",
-              pName: "清蒸蒜香帝王蝦",
-              pImg:
-                "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
-              pPrice: "200",
-              pOptions: ["辣度：大辣", "洋蔥：加"],
-              pQty: 1
-            },
-            {
-              pId: "2",
-              pName: "招牌綜合海鮮",
-              pImg:
-                "https://images.unsplash.com/photo-1563372522-8e97eac82f62?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
-              pPrice: "300",
-              pOptions: ["辣度：小辣"],
-              pQty: 2
-            }
-          ]
-        };
-      },
+      data: cartData,
       methods: {
         // 數量加減
         minusQty(item, index) {
@@ -158,9 +262,10 @@
             });
           }
         },
+        // 送出訂單
         checkOrder() {
           // 成功的話頁面跳轉到 result_out.html
-          window.location.href = 'result_out.html';
+          window.location.href = "result_out.html";
         }
       },
       computed: {
@@ -168,6 +273,20 @@
           let str = 0;
           this.orderList.forEach((item, i) => {
             str += item.pQty;
+          });
+          return str;
+        },
+        orderPointPrice() {
+          let str = 0;
+          this.orderList.forEach((item, i) => {
+            str += item.pointPrice * item.pQty;
+          });
+          return str;
+        },
+        orderPointHeart() {
+          let str = 0;
+          this.orderList.forEach((item, i) => {
+            str += item.pointHeart * item.pQty;
           });
           return str;
         },

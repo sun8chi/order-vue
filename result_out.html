@@ -4,13 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Lay Order 躺著點</title>
+    <title>快點快點</title>
     <link rel="stylesheet" href="css/swiper.min.css" />
     <link rel="stylesheet" href="css/sweetalert2.min.css" />
     <link rel="stylesheet" href="css/all.css" />
   </head>
   <body>
     <div class="page nav_round" id="app">
+      <page-footer></page-footer>
       <div class="main">
         <header>
           <h1>點餐成功</h1>
@@ -19,7 +20,7 @@
           <div class="result out">
             <img src="img/result_ok.png" alt="" />
             <div class="number">
-              {{orderDetail.orderNum}}
+              {{ orderDetail.orderNum }}
             </div>
             <p class="text-center mb-4">
               謝謝您的訂餐！<br />
@@ -31,20 +32,22 @@
           <div class="order_list mb-4">
             <ul>
               <li class="item total">
-                <h4>共 <b class="color_default">{{orderDetail.num}}</b> 份</h4>
-                <span>${{orderDetail.totalPrice}}</span>
+                <h4>
+                  共 <b class="color_default">{{ orderDetail.num }}</b> 份
+                </h4>
+                <span>${{ orderDetail.totalPrice }}</span>
               </li>
               <li class="item">
                 <h4>電話</h4>
-                <span>{{orderDetail.phone}}</span>
+                <span>{{ orderDetail.phone }}</span>
               </li>
               <li class="item">
                 <h4>取餐人</h4>
-                <span>{{orderDetail.name}}</span>
+                <span>{{ orderDetail.name }}</span>
               </li>
               <li class="item">
                 <h4>取餐時間</h4>
-                <span>{{orderDetail.pickTime}}</span>
+                <span>{{ orderDetail.pickTime }}</span>
               </li>
             </ul>
           </div>
@@ -74,13 +77,13 @@
     var app = new Vue({
       el: "#app",
       data: {
-        orderDetail:{
-          orderNum:'003',
-          num:'3',
-          totalPrice:'600',
-          phone:'0980264521',
-          name:'張小明',
-          pickTime:'2020/4/12 12:00'
+        orderDetail: {
+          orderNum: "003",
+          num: "3",
+          totalPrice: "600",
+          phone: "0980264521",
+          name: "張小明",
+          pickTime: "2020/4/12 12:00"
         }
       },
       methods: {
