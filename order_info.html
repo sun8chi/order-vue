@@ -39,28 +39,60 @@
                       >{{ inneritem }}</span
                     >
                   </div>
+                  <div class="p_num">
+                    <div class="color_green mr-2 ml-2">
+                      <i class="iconfont icon-coins"></i
+                      >{{ item.pointPrice * item.pQty }}
+                    </div>
+                    <div class="color_red">
+                      <i class="iconfont icon-Heart"></i
+                      >{{ item.pointHeart * item.pQty }}
+                    </div>
+                    <div class="p_price">
+                      ${{ item.pPrice * item.pQty }} * {{ item.pQty }}
+                    </div>
+                  </div>
                 </div>
-                <div class="p_price">${{ item.pPrice }}</div>
               </li>
             </ul>
           </div>
           <div class="order_list mb-4">
             <ul>
               <li class="item total">
-                <h4>共 <b class="color_default">{{orderInfo.totalNum}}</b> 份</h4>
-                <span>${{orderInfo.totalPrice}}</span>
+                <h4>
+                  <div>
+                    共 <b class="color_default">{{ orderQty }}</b> 份
+                  </div>
+                  <div>
+                    現金點數共
+                    <b class="color_green"
+                      ><i class="iconfont icon-coins"></i>
+                      {{ orderPointPrice }}</b
+                    >
+                    點
+                  </div>
+                  <div>
+                    愛心點數共
+                    <b class="color_red"
+                      ><i class="iconfont icon-Heart"></i>
+                      {{ orderPointHeart }}</b
+                    >
+                    點
+                  </div>
+                </h4>
+                <span>${{ orderTotal }}</span>
               </li>
               <li class="item">
                 <h4>電話</h4>
-                <span>{{orderInfo.phone}}</span>
+                <span>{{ orderInfo.phone }}</span>
               </li>
               <li class="item">
                 <h4>取餐人</h4>
-                <span>{{orderInfo.name}}</span>
+                <span>{{ orderInfo.name }}</span>
               </li>
               <li class="item">
                 <h4>取餐時間</h4>
-                <span>{{orderInfo.pickTime}}</span>
+                <span>{{ orderInfo.pickTime }}</span>
               </li>
             </ul>
           </div>
@@ -96,7 +128,9 @@
               "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
             pPrice: "200",
             pOptions: ["辣度：大辣", "洋蔥：加"],
-            pQty: 1
+            pQty: 1,
+            pointPrice: 5,
+            pointHeart: 7
           },
           {
             pId: "2",
@@ -105,18 +139,49 @@
               "https://images.unsplash.com/photo-1563372522-8e97eac82f62?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
             pPrice: "300",
             pOptions: ["辣度：小辣"],
-            pQty: 2
+            pQty: 2,
+            pointPrice: 8,
+            pointHeart: 3
           }
         ],
         orderInfo: {
-          totalNum:'4',
-          totalPrice:'500',
-          name:'陳小黃',
-          phone:'09123123123',
-          pickTime:'2020/04/20'
+          totalNum: "4",
+          totalPrice: "500",
+          name: "陳小黃",
+          phone: "09123123123",
+          pickTime: "2020/04/20"
         }
       },
-      methods: {
+      methods: {},
+      computed: {
+        orderQty() {
+          let str = 0;
+          this.orderList.forEach((item, i) => {
+            str += item.pQty;
+          });
+          return str;
+        },
+        orderPointPrice() {
+          let str = 0;
+          this.orderList.forEach((item, i) => {
+            str += item.pointPrice * item.pQty;
+          });
+          return str;
+        },
+        orderPointHeart() {
+          let str = 0;
+          this.orderList.forEach((item, i) => {
+            str += item.pointHeart * item.pQty;
+          });
+          return str;
+        },
+        orderTotal() {
+          let str = 0;
+          this.orderList.forEach((item, i) => {
+            str += item.pQty * item.pPrice;
+          });
+          return str;
+        }
       }
     });
   </script>
